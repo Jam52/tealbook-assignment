@@ -4,6 +4,9 @@ const primaryPurple = '#3A254C';
 const secondaryOrange = '#E8A63A';
 
 export const theme = createTheme({
+  typography: {
+    fontSize: 12,
+  },
   palette: {
     common: {
       purple: primaryPurple,

@@ -1,6 +1,6 @@
 import { Container, Box, TextField, Button } from '@mui/material';
 import React from 'react';
-import { theme } from './theme';
+import { theme } from '../theme';
 
 interface Props {
   isError: Boolean;
@@ -16,9 +16,8 @@ const CityInput: React.FC<Props> = ({
   handlePreviousCityFetch,
 }) => {
   return (
-    <Container
+    <Box
       data-testid="cityInput"
-      maxWidth="md"
       sx={{
         backgroundColor: 'white',
         padding: '3rem',
@@ -60,7 +59,7 @@ const CityInput: React.FC<Props> = ({
           </Box>
         </div>
       )}
-    </Container>
+    </Box>
   );
 };
 
