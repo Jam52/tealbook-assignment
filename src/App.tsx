@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import { ThemeProvider } from '@mui/material/styles';
-import { CssBaseline } from '@mui/material';
+import { CssBaseline, Container } from '@mui/material';
 import { theme } from './components/ui/theme';
 import Header from './components/ui/Header';
 import CityInput from './components/ui/CityInput/CityInput';
@@ -13,13 +13,18 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Header />
-      <CityInput
-        isError={false}
-        handleSubmit={() => {}}
-        previousCities={[]}
-        handlePreviousCityFetch={() => {}}
-      />
-      <Forcast results={null} />
+      <Container
+        maxWidth="md"
+        sx={{ display: 'flex', flexDirection: 'column', gap: '3rem' }}
+      >
+        <CityInput
+          isError={false}
+          handleSubmit={() => {}}
+          previousCities={[]}
+          handlePreviousCityFetch={() => {}}
+        />
+        <Forcast results={forcastRes.daily} />
+      </Container>
     </ThemeProvider>
   );
 }

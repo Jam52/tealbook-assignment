@@ -1,4 +1,12 @@
-import { Container, Box, Card, CardHeader, CardMedia } from '@mui/material';
+import {
+  Container,
+  Box,
+  Card,
+  CardHeader,
+  CardMedia,
+  CardContent,
+} from '@mui/material';
+import Typography from '@mui/material/Typography';
 import dayjs from 'dayjs';
 
 interface props {
@@ -10,26 +18,39 @@ interface props {
 
 const Forcast: React.FC<props> = ({ results }) => {
   return (
-    <Container data-testid="forcast" maxWidth="md">
-      <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+    <Box data-testid="forcast" maxWidth="md">
+      <Typography variant="h4">Seven Day Forcast</Typography>
+      <Box
+        sx={{ display: 'flex', justifyContent: 'space-between', gap: '0.5rem' }}
+      >
         {results?.map((result, index) => {
-          console.log(dayjs.unix(result.dt).format('ddd'));
+          const date = dayjs.unix(result.dt);
           return (
-            <Card key={index} data-testid="forcastCard" variant="outlined">
+            <Card
+              key={index}
+              data-testid="forcastCard"
+              variant="outlined"
+              sx={{ width: '100%' }}
+            >
+              <CardHeader
+                title={date.format('ddd')}
+                subheader={date.format('DD-MMM')}
+              />
               <CardMedia
                 component="img"
-                height="100"
+                height="80"
                 image={`http://openweathermap.org/img/wn/${result.weather[0].icon}@2x.png`}
               />
-              <CardHeader
-                title={dayjs.unix(result.dt).format('ddd')}
-                subheader={result.weather[0].description}
-              />
+              <CardContent>
+                <Typography variant="subtitle2">
+                  {result.weather[0].description}
+                </Typography>
+              </CardContent>
             </Card>
           );
         })}
       </Box>
-    </Container>
+    </Box>
   );
 };
 

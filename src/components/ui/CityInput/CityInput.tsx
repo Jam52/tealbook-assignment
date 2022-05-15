@@ -16,9 +16,8 @@ const CityInput: React.FC<Props> = ({
   handlePreviousCityFetch,
 }) => {
   return (
-    <Container
+    <Box
       data-testid="cityInput"
-      maxWidth="md"
       sx={{
         backgroundColor: 'white',
         padding: '3rem',
@@ -60,7 +59,7 @@ const CityInput: React.FC<Props> = ({
           </Box>
         </div>
       )}
-    </Container>
+    </Box>
   );
 };
 
