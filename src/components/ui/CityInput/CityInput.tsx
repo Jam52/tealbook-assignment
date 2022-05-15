@@ -1,6 +1,6 @@
 import { Container, Box, TextField, Button } from '@mui/material';
 import React from 'react';
-import { theme } from './theme';
+import { theme } from '../theme';
 
 interface Props {
   isError: Boolean;
