@@ -16,10 +16,10 @@ interface props {
   }> | null;
 }
 
-const Forcast: React.FC<props> = ({ results }) => {
+const Forecast: React.FC<props> = ({ results }) => {
   return (
     <Box data-testid="forcast" maxWidth="md">
-      <Typography variant="h4">Seven Day Forcast</Typography>
+      <Typography variant="h4">Seven Day Forecast</Typography>
       <Box
         sx={{ display: 'flex', justifyContent: 'space-between', gap: '0.5rem' }}
       >
@@ -54,4 +54,4 @@ const Forcast: React.FC<props> = ({ results }) => {
   );
 };
 
-export default Forcast;
+export default Forecast;

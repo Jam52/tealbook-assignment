@@ -5,8 +5,8 @@ import { CssBaseline, Container } from '@mui/material';
 import { theme } from './components/ui/theme';
 import Header from './components/ui/Header';
 import CityInput from './components/ui/CityInput/CityInput';
-import Forcast from './components/ui/Forcast/Forcast';
-import forcastRes from './components/ui/Forcast/forcastRes.json';
+import Forecast from './components/ui/Forecast/Forecast';
+import forecastRes from './components/ui/Forecast/forecastRes.json';
 
 function App() {
   return (
@@ -23,7 +23,7 @@ function App() {
           previousCities={[]}
           handlePreviousCityFetch={() => {}}
         />
-        <Forcast results={forcastRes.daily} />
+        <Forecast results={forecastRes.daily} />
       </Container>
     </ThemeProvider>
   );
