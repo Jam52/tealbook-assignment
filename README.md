@@ -1,6 +1,22 @@
-# Getting Started with Create React App
+# Tealbook Assignment
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project was set as an assignment for [tealbook](https://www.tealbook.com/).
+
+### Main Criteria
+
+- Enter a valid city into a text field and show the 7-day weather forecast of that city
+- Show an image depicting the state of the weather for each day. For example: snowing, raining, sunny, etc...
+- Save the last 5 searches and allow users to select any of them to show the 7-day weather forecast
+- In the corner of the screen, display the current weather of the city where the user is and update this weather with the latest value every 5 minutes
+- If there is a city selected, display the difference in the weather between the user's city and the selected city
+
+### Other Requirements:
+
+- Use react (create-react-app)
+- Use Typescript
+- Use redux or recoil to manage the global state of the app
+- Write unit test for at least 2 of the components, use https://testing-library.com/docs/react-testing-library/intro/
+- Make it look pretty: use something like material-ui, or bootstrap
 
 ## Available Scripts
 
@@ -28,19 +44,3 @@ The build is minified and the filenames include the hashes.\
 Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
