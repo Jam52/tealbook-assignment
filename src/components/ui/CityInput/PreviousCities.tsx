@@ -12,8 +12,8 @@ const PreviousCities: React.FC<props> = ({ cities }) => {
       {cities.length === 0 ? (
         ''
       ) : (
-        <div>
-          <h2 data-testid="previousCityHeader">Searched Cities:</h2>
+        <div data-testid="previousCities">
+          <h2>Searched Cities:</h2>
           <Box sx={{ display: 'flex' }}>
             {cities.map((city, index) => {
               return (

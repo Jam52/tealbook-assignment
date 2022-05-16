@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 // Import your own reducer
 import weather from '../components/redux/features/weather';
 
-function render(
+function utilRender(
   ui,
   {
     preloadedState,
@@ -22,4 +22,4 @@ function render(
 // re-export everything
 export * from '@testing-library/react';
 // override render method
-export { render };
+export { utilRender };

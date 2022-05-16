@@ -34,38 +34,42 @@ const weatherSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(getCity.fulfilled, (state, { payload }) => {
-      if (payload.length === 0) {
+    builder
+      .addCase(getCity.pending, (state, action) => {
+        state.cityStatus = 'pending';
+      })
+      .addCase(getCity.fulfilled, (state, { payload }) => {
+        if (payload.length === 0) {
+          state.cityStatus = 'error';
+          return;
+        }
+        state.cityStatus = '';
+      })
+      .addCase(getCity.rejected, (state, action) => {
         state.cityStatus = 'error';
-        return;
-      }
-      state.cityStatus = '';
-    });
-    builder.addCase(getCity.rejected, (state, action) => {
-      state.cityStatus = 'error';
-    });
-    builder.addCase(getWeather.pending, (state, action) => {
-      state.weatherStatus = 'pending';
-    });
-    builder.addCase(getWeather.fulfilled, (state, { payload }) => {
-      if (payload.length === 0) {
-        state.weatherStatus = 'error';
-        return;
-      }
-      if (!state.searchedCities.some(({ name }) => name === payload.name)) {
-        const cities = [
-          { name: payload.name, data: payload.data.daily },
-          ...state.searchedCities,
-        ];
-        state.searchedCities = [...cities.slice(0, 7)];
-      }
+      })
+      .addCase(getWeather.pending, (state, action) => {
+        state.weatherStatus = 'pending';
+      })
+      .addCase(getWeather.fulfilled, (state, { payload }) => {
+        if (payload.length === 0) {
+          state.weatherStatus = 'error';
+          return;
+        }
+        if (!state.searchedCities.some(({ name }) => name === payload.name)) {
+          const cities = [
+            { name: payload.name, data: payload.data.daily },
+            ...state.searchedCities,
+          ];
+          state.searchedCities = [...cities.slice(0, 7)];
+        }
 
-      state.currentCity = { name: payload.name, data: payload.data.daily };
-      state.weatherStatus = 'ok';
-    });
-    builder.addCase(getWeather.rejected, (state, action) => {
-      state.weatherStatus = 'error';
-    });
+        state.currentCity = { name: payload.name, data: payload.data.daily };
+        state.weatherStatus = 'ok';
+      })
+      .addCase(getWeather.rejected, (state, action) => {
+        state.weatherStatus = 'error';
+      });
   },
 });
 

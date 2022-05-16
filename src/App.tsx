@@ -8,7 +8,6 @@ import store from './components/redux/store';
 import Header from './components/ui/Header';
 import CityInput from './components/ui/CityInput/CityInput';
 import Forecast from './components/ui/Forecast/Forecast';
-import forecastRes from './components/ui/Forecast/forecastRes.json';
 
 function App() {
   return (

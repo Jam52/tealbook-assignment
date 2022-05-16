@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 const Forecast = () => {
   const { currentCity } = useSelector((state) => state.weather);
   return currentCity ? (
-    <Box data-testid="forcast" maxWidth="md">
+    <Box data-testid="forecast" maxWidth="md">
       <Typography variant="h4">
         Seven Day Forecast - {currentCity.name}
       </Typography>
@@ -15,10 +15,11 @@ const Forecast = () => {
       >
         {currentCity?.data.map((result, index) => {
           const date = dayjs.unix(result.dt);
+
           return (
             <Card
               key={index}
-              data-testid="forcastCard"
+              data-testid="forecastCard"
               variant="outlined"
               sx={{ width: '100%' }}
             >

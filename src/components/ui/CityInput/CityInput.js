@@ -41,7 +41,12 @@ const CityInput = () => {
               cityStatus === 'error' ? 'City not found.' : 'Enter a city name.'
             }
           ></TextField>
-          <Button type="submit" variant="contained" id="city-input">
+          <Button
+            data-testid="cityButton"
+            type="submit"
+            variant="contained"
+            id="city-input"
+          >
             Submit
           </Button>
         </Box>

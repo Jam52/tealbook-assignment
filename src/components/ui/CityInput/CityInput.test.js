@@ -1,26 +1,56 @@
-import { render, fireEvent, waitFor, screen } from '../../../utils/test-utils';
+import { utilRender, screen } from '../../../utils/test-utils';
 import CityInput from './CityInput';
-import PreviousCities from './previousCities';
+import forecastJson from '../Forecast/forecastRes.json';
 
-describe('City Input Component', () => {
-  const props = {};
-  it('rendered', () => {
-    const { getByTestId } = render(<CityInput />);
-    const input = getByTestId('city');
-    expect(input).toBeTruthy();
+describe('CityInput Component ', () => {
+  let container = null;
+  let searchedCitiesHeader = null;
+  let submitButton = null;
+  let cityButton = null;
+
+  describe('Before any updates to state', () => {
+    beforeEach(() => {
+      utilRender(<CityInput />);
+      container = screen.getByTestId('city');
+      searchedCitiesHeader = screen.queryByTestId('previousCites');
+      submitButton = screen.findByTestId('cityButton');
+    });
+
+    it('renders correctly', () => {
+      expect(container).toBeTruthy();
+    });
+    it('does not container previose city header', () => {
+      expect(searchedCitiesHeader).toBeFalsy();
+    });
   });
 
-  it('Renderes previous city buttons when available', () => {
-    const { getAllByTestId } = render(
-      <PreviousCities {...props} cities={['London', 'Tokyo']} />,
-    );
-    const buttons = getAllByTestId('previousCityButton');
-    expect(buttons).toHaveLength(2);
-  });
+  describe('After update to state', () => {
+    beforeEach(() => {
+      utilRender(<CityInput />, {
+        preloadedState: {
+          weather: {
+            cityStatus: '',
+            searchedCities: [
+              { name: 'Toronto', data: forecastJson.daily },
+              { name: 'New York', data: forecastJson.daily },
+              { name: 'Nottingham', data: forecastJson.daily },
+            ],
+          },
+        },
+      });
+      container = screen.getByTestId('city');
+      searchedCitiesHeader = screen.getByTestId('previousCities');
+      cityButton = screen.getAllByTestId('previousCityButton');
+    });
 
-  it('Renders no previos city header when no cities have been searched', () => {
-    const { queryByTestId } = render(<PreviousCities cities={[]} />);
-    const buttons = queryByTestId('previousCityHeader');
-    expect(buttons).toBeNull();
+    it('renders correctly', () => {
+      expect(container).toBeTruthy();
+    });
+    it('contains previose city header', () => {
+      expect(searchedCitiesHeader).toBeTruthy();
+    });
+    it('contains 3 buttons', () => {
+      expect(cityButton).toHaveLength(3);
+    });
   });
 });
