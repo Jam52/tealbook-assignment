@@ -1,9 +1,8 @@
-import { render } from '@testing-library/react';
+import { render } from '../../../utils/test-utils';
 import Forecast from './Forecast';
-import res from './forecastRes.json';
 
 describe('Forcast component', () => {
-  const forcast = <Forecast results={res.daily} />;
+  const forcast = <Forecast />;
 
   it('renders correctly', () => {
     const { queryByTestId } = render(forcast);

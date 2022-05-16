@@ -4,11 +4,12 @@ import { useSelector } from 'react-redux';
 import { theme } from '../theme';
 import { useDispatch } from 'react-redux';
 import { getCity } from '../../redux/features/weather';
+import PreviousCities from './PreviousCities';
 
 const CityInput = () => {
   const [formValue, changeValue] = useState('');
   const dispatch = useDispatch();
-  const { status } = useSelector((state) => state.weather);
+  const { cityStatus, searchedCities } = useSelector((state) => state.weather);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -35,9 +36,9 @@ const CityInput = () => {
             value={formValue}
             onChange={(event) => changeValue(event.target.value)}
             id="city-input"
-            error={false}
+            error={cityStatus === 'error'}
             helperText={
-              status === 'error' ? 'City not found.' : 'Enter a city name.'
+              cityStatus === 'error' ? 'City not found.' : 'Enter a city name.'
             }
           ></TextField>
           <Button type="submit" variant="contained" id="city-input">
@@ -45,6 +46,7 @@ const CityInput = () => {
           </Button>
         </Box>
       </form>
+      <PreviousCities cities={searchedCities.map((city) => city.name)} />
     </Box>
   );
 };

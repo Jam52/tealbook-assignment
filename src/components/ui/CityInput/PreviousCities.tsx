@@ -10,7 +10,7 @@ const PreviousCities: React.FC<props> = ({ cities }) => {
         ''
       ) : (
         <div>
-          <h2 data-testid="previousCityHeader">Previous Cities:</h2>
+          <h2 data-testid="previousCityHeader">Searched Cities:</h2>
           <Box sx={{ display: 'flex' }}>
             {cities.map((city, index) => (
               <Button

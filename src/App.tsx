@@ -21,7 +21,7 @@ function App() {
           sx={{ display: 'flex', flexDirection: 'column', gap: '3rem' }}
         >
           <CityInput />
-          <Forecast results={forecastRes.daily} />
+          <Forecast />
         </Container>
       </ThemeProvider>
     </Provider>

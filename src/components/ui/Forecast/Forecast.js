@@ -1,22 +1,17 @@
 import { Box, Card, CardHeader, CardMedia, CardContent } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import dayjs from 'dayjs';
+import { useSelector } from 'react-redux';
 
-interface props {
-  results: Array<{
-    dt: number;
-    weather: Array<{ icon: string; description: string }>;
-  }> | null;
-}
-
-const Forecast: React.FC<props> = ({ results }) => {
+const Forecast = () => {
+  const { currentCity } = useSelector((state) => state.weather);
   return (
     <Box data-testid="forcast" maxWidth="md">
       <Typography variant="h4">Seven Day Forecast</Typography>
       <Box
         sx={{ display: 'flex', justifyContent: 'space-between', gap: '0.5rem' }}
       >
-        {results?.map((result, index) => {
+        {currentCity?.data.map((result, index) => {
           const date = dayjs.unix(result.dt);
           return (
             <Card
