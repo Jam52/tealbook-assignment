@@ -5,9 +5,11 @@ import { useSelector } from 'react-redux';
 
 const Forecast = () => {
   const { currentCity } = useSelector((state) => state.weather);
-  return (
+  return currentCity ? (
     <Box data-testid="forcast" maxWidth="md">
-      <Typography variant="h4">Seven Day Forecast</Typography>
+      <Typography variant="h4">
+        Seven Day Forecast - {currentCity.name}
+      </Typography>
       <Box
         sx={{ display: 'flex', justifyContent: 'space-between', gap: '0.5rem' }}
       >
@@ -39,7 +41,7 @@ const Forecast = () => {
         })}
       </Box>
     </Box>
-  );
+  ) : null;
 };
 
 export default Forecast;

@@ -1,9 +1,12 @@
 import { Button, Box } from '@mui/material';
+import { useDispatch } from 'react-redux';
+import { setPreviousCity } from '../../redux/features/weather';
 
 interface props {
-  cities: Array<string>;
+  cities: Array<{ name: string; data: Array<{}> }>;
 }
 const PreviousCities: React.FC<props> = ({ cities }) => {
+  const dispatch = useDispatch();
   return (
     <div>
       {cities.length === 0 ? (
@@ -12,15 +15,17 @@ const PreviousCities: React.FC<props> = ({ cities }) => {
         <div>
           <h2 data-testid="previousCityHeader">Searched Cities:</h2>
           <Box sx={{ display: 'flex' }}>
-            {cities.map((city, index) => (
-              <Button
-                data-testid="previousCityButton"
-                key={index}
-                onClick={() => {}}
-              >
-                {city}
-              </Button>
-            ))}
+            {cities.map((city, index) => {
+              return (
+                <Button
+                  data-testid="previousCityButton"
+                  key={index}
+                  onClick={() => dispatch(setPreviousCity(city))}
+                >
+                  {city.name}
+                </Button>
+              );
+            })}
           </Box>
         </div>
       )}

@@ -7,8 +7,6 @@ export const getCity = createAsyncThunk(
       `http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${process.env.REACT_APP_API_KEY}`,
     );
     const data = await res.json();
-
-    if (data.length === 0) return data;
     const { lat, lon, name } = data[0];
     dispatch(getWeather({ lat, lon, name }));
     return data;
@@ -22,7 +20,6 @@ export const getWeather = createAsyncThunk(
       `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=hourly,minutely&appid=${process.env.REACT_APP_API_KEY}&units=metric`,
     );
     const data = await res.json();
-    console.log({ name, data: data.data });
     return { name, data: data };
   },
 );
@@ -31,7 +28,11 @@ const weatherSlice = createSlice({
   name: ' weather',
   initialState: { cityStatus: 'ok', weatherStatus: '', searchedCities: [] },
   currentCity: { name: '', data: [] },
-  reducers: {},
+  reducers: {
+    setPreviousCity: (state, { payload }) => {
+      state.currentCity = payload;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(getCity.fulfilled, (state, { payload }) => {
       if (payload.length === 0) {
@@ -47,15 +48,18 @@ const weatherSlice = createSlice({
       state.weatherStatus = 'pending';
     });
     builder.addCase(getWeather.fulfilled, (state, { payload }) => {
-      console.log('fullfilled', payload);
       if (payload.length === 0) {
         state.weatherStatus = 'error';
         return;
       }
-      state.searchedCities = [
-        ...state.searchedCities,
-        { name: payload.name, data: payload.data },
-      ];
+      if (!state.searchedCities.some(({ name }) => name === payload.name)) {
+        const cities = [
+          { name: payload.name, data: payload.data.daily },
+          ...state.searchedCities,
+        ];
+        state.searchedCities = [...cities.slice(0, 7)];
+      }
+
       state.currentCity = { name: payload.name, data: payload.data.daily };
       state.weatherStatus = 'ok';
     });
@@ -64,5 +68,7 @@ const weatherSlice = createSlice({
     });
   },
 });
+
+export const { setPreviousCity } = weatherSlice.actions;
 
 export default weatherSlice.reducer;

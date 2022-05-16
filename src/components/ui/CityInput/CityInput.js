@@ -46,7 +46,7 @@ const CityInput = () => {
           </Button>
         </Box>
       </form>
-      <PreviousCities cities={searchedCities.map((city) => city.name)} />
+      <PreviousCities cities={searchedCities} />
     </Box>
   );
 };
