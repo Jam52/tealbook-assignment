@@ -1,4 +1,4 @@
-import { Box } from '@mui/material';
+import { Box, Grid } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import { useEffect } from 'react';
 import { setUserCity } from '../../redux/features/weather';
@@ -24,29 +24,71 @@ const UserCity = () => {
   return (
     <Box data-testid="userCity" alignItems="center">
       {userCityData ? (
-        <Box data-testid="userInfo">
-          <img
-            src={`http://openweathermap.org/img/wn/${userCityData.data.weather[0].icon}@2x.png`}
-            alt="logo"
-            style={{ width: '4rem' }}
-          />
-          <Typography variant="h6">{userCityData.name}</Typography>
-          <Typography variant="h6">{userCityData.data.temp}</Typography>
-        </Box>
+        <Grid container data-testid="userInfo">
+          <Grid
+            item
+            sm={3}
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <img
+              src={`http://openweathermap.org/img/wn/${userCityData.data.weather[0].icon}@4x.png`}
+              alt="logo"
+              style={{ width: '100%' }}
+            />
+          </Grid>
+          <Grid
+            item
+            sm={6}
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <Typography variant="h2">Hello {userCityData.name}!</Typography>
+          </Grid>
+          <Grid
+            item
+            sm={3}
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'end',
+              justifyContent: 'center',
+            }}
+          >
+            <Typography variant="body1">
+              Humidity: {userCityData.data.humidity}
+            </Typography>
+            <Typography variant="body1">
+              Pressure: {userCityData.data.pressure}
+            </Typography>
+            <Typography variant="body1">
+              Wind Speed: {userCityData.data.wind_speed}
+            </Typography>
+            <Typography variant="body1">
+              Uv Index: {userCityData.data.uvi}
+            </Typography>
+            <Typography variant="h5">
+              {userCityData.data.weather[0].description}
+            </Typography>
+          </Grid>
+        </Grid>
       ) : (
-        PlaceHolderImage
+        <img
+          data-testid="image"
+          src="logo.svg"
+          alt="logo"
+          style={{ width: '3rem' }}
+        />
       )}
     </Box>
   );
 };
-
-const PlaceHolderImage = (
-  <img
-    data-testid="image"
-    src="logo.svg"
-    alt="logo"
-    style={{ width: '4rem' }}
-  />
-);
 
 export default UserCity;
