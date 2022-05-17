@@ -1,10 +1,10 @@
 import { Box, Card, CardHeader, CardMedia, CardContent } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import dayjs from 'dayjs';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '../../redux/hooks';
 
 const Forecast = () => {
-  const { currentCity } = useSelector((state) => state.weather);
+  const { currentCity } = useAppSelector((state) => state.weather);
   return currentCity ? (
     <Box data-testid="forecast" maxWidth="md">
       <Typography variant="h4">
@@ -13,9 +13,8 @@ const Forecast = () => {
       <Box
         sx={{ display: 'flex', justifyContent: 'space-between', gap: '0.5rem' }}
       >
-        {currentCity?.data.map((result, index) => {
+        {currentCity.data.map((result, index) => {
           const date = dayjs.unix(result.dt);
-
           return (
             <Card
               key={index}

@@ -1,12 +1,13 @@
 import { Button, Box } from '@mui/material';
-import { useDispatch } from 'react-redux';
 import { setPreviousCity } from '../../redux/features/weather';
+import { useAppDispatch } from '../../redux/hooks';
+import { ICity } from '../../redux/features/weather';
 
 interface props {
-  cities: Array<{ name: string; data: Array<{}> }>;
+  cities: Array<ICity>;
 }
 const PreviousCities: React.FC<props> = ({ cities }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   return (
     <div>
       {cities.length === 0 ? (

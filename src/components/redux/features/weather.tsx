@@ -36,13 +36,17 @@ export const getWeather = createAsyncThunk<ICity, IGeoLocation>(
       `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=hourly,minutely&appid=${process.env.REACT_APP_API_KEY}&units=metric`,
     );
     const data = await res.json();
-    return { name, data: data[0] };
+    const city: ICity = { name, data: data.daily };
+    return city;
   },
 );
 
-interface ICity {
+export interface ICity {
   name: string;
-  data: Array<{}>;
+  data: Array<{
+    dt: number;
+    weather: Array<{ icon: string; description: string }>;
+  }>;
 }
 
 interface IWeatherState {
