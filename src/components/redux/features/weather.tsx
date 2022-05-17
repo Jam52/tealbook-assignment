@@ -1,21 +1,13 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { AppDispatch } from '../store';
-
-interface IGeoLocation {
-  lat: number;
-  lon: number;
-  name: string;
-}
+import { fetchGeoLocation, fetchWeatherData } from '../../servises/weatherApi';
 
 export const getCity = createAsyncThunk<
   IGeoLocation,
   string,
   { dispatch: AppDispatch }
 >('weather/getCity', async (city: string, { dispatch }) => {
-  const res = await fetch(
-    `http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${process.env.REACT_APP_API_KEY}`,
-  );
-  const data = await res.json();
+  const data = await fetchGeoLocation(city);
   const { lat, lon, name } = data[0];
 
   const location: IGeoLocation = {
@@ -31,23 +23,11 @@ export const getCity = createAsyncThunk<
 export const getWeather = createAsyncThunk<ICity, IGeoLocation>(
   'weather/weather',
   async (location: IGeoLocation) => {
-    const { lat, lon, name } = location;
-    const res = await fetch(
-      `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=hourly,minutely&appid=${process.env.REACT_APP_API_KEY}&units=metric`,
-    );
-    const data = await res.json();
-    const city: ICity = { name, data: data.daily };
+    const data = await fetchWeatherData(location);
+    const city: ICity = { name: location.name, data: data.daily };
     return city;
   },
 );
-
-export interface ICity {
-  name: string;
-  data: Array<{
-    dt: number;
-    weather: Array<{ icon: string; description: string }>;
-  }>;
-}
 
 interface IWeatherState {
   fetchCityStatus: string;
@@ -55,11 +35,6 @@ interface IWeatherState {
   searchedCities: Array<ICity>;
   fetchWeatherStatus: string;
 }
-
-// interface ISearchedCity {
-//   name: string;
-//   data: Array<{ weather: Array<{}> }>;
-// }
 
 const initialState: IWeatherState = {
   fetchCityStatus: '',
@@ -81,16 +56,13 @@ const weatherSlice = createSlice({
       .addCase(getCity.pending, (state, action) => {
         state.fetchCityStatus = 'loading';
       })
-      .addCase(
-        getCity.fulfilled,
-        (state, action: PayloadAction<IGeoLocation>) => {
-          if (!action.payload) {
-            state.fetchCityStatus = 'no cities found';
-            return;
-          }
-          state.fetchCityStatus = '';
-        },
-      )
+      .addCase(getCity.fulfilled, (state, { payload }) => {
+        if (!payload) {
+          state.fetchCityStatus = 'no cities found';
+          return;
+        }
+        state.fetchCityStatus = '';
+      })
       .addCase(getCity.rejected, (state, action) => {
         state.fetchCityStatus = 'error fetching city';
       })

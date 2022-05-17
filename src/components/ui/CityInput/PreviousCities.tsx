@@ -1,7 +1,6 @@
 import { Button, Box } from '@mui/material';
 import { setPreviousCity } from '../../redux/features/weather';
 import { useAppDispatch } from '../../redux/hooks';
-import { ICity } from '../../redux/features/weather';
 
 interface props {
   cities: Array<ICity>;
