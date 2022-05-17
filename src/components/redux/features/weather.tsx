@@ -1,6 +1,10 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { AppDispatch } from '../store';
-import { fetchGeoLocation, fetchWeatherData } from '../../servises/weatherApi';
+import {
+  fetchGeoLocation,
+  fetchWeatherData,
+  fetchReverseGeoencoding,
+} from '../../servises/weatherApi';
 
 export const getCity = createAsyncThunk<
   IGeoLocation,
@@ -29,11 +33,25 @@ export const getWeather = createAsyncThunk<ICity, IGeoLocation>(
   },
 );
 
+export const setUserCity = createAsyncThunk(
+  'weather/userCity',
+  async (location: IGeoLocation) => {
+    const weatherData = await fetchWeatherData(location);
+    const cityNameData = await fetchReverseGeoencoding(location);
+    const city: IUserCity = {
+      name: cityNameData.name,
+      data: weatherData.current,
+    };
+    return city;
+  },
+);
+
 interface IWeatherState {
   fetchCityStatus: string;
   currentCity: ICity | null;
   searchedCities: Array<ICity>;
   fetchWeatherStatus: string;
+  userCityData: IUserCity | null;
 }
 
 const initialState: IWeatherState = {
@@ -41,6 +59,7 @@ const initialState: IWeatherState = {
   fetchWeatherStatus: '',
   searchedCities: [],
   currentCity: null,
+  userCityData: null,
 };
 
 const weatherSlice = createSlice({
@@ -88,6 +107,9 @@ const weatherSlice = createSlice({
       })
       .addCase(getWeather.rejected, (state, action) => {
         state.fetchWeatherStatus = 'error';
+      })
+      .addCase(setUserCity.fulfilled, (state, { payload }) => {
+        state.userCityData = payload;
       });
   },
 });
