@@ -1,34 +1,54 @@
-import { render } from '@testing-library/react';
+import { utilRender, screen } from '../../../utils/test-utils';
 import CityInput from './CityInput';
+import forecastJson from '../Forecast/forecastRes.json';
 
-describe('City Input Component', () => {
-  const props = {
-    isError: false,
-    previousCities: [],
-  };
-  it('rendered', () => {
-    const { getByTestId } = render(<CityInput {...props} />);
-    const input = getByTestId('cityInput');
-    expect(input).toBeTruthy();
+describe('CityInput Component', () => {
+  const setup = (state) => utilRender(<CityInput />, state);
+
+  describe('Before any updates to state', () => {
+    it('renders correctly', () => {
+      setup();
+      const container = screen.getByTestId('city');
+      expect(container).toBeTruthy();
+    });
+
+    it('does not container previose city header', () => {
+      setup();
+      const searchedCitiesHeader = screen.queryByTestId('previousCites');
+      expect(searchedCitiesHeader).toBeFalsy();
+    });
   });
 
-  it('Rendered error msg when input was incorrect', () => {
-    const { getByText } = render(<CityInput {...props} isError={true} />);
-    const errorMsg = getByText('City not found.');
-    expect(errorMsg).toBeTruthy();
-  });
+  describe('After update to state', () => {
+    const state = {
+      preloadedState: {
+        weather: {
+          cityStatus: '',
+          searchedCities: [
+            { name: 'Toronto', data: forecastJson.daily },
+            { name: 'New York', data: forecastJson.daily },
+            { name: 'Nottingham', data: forecastJson.daily },
+          ],
+        },
+      },
+    };
 
-  it('Renderes previous city buttons when available', () => {
-    const { getAllByTestId } = render(
-      <CityInput {...props} previousCities={['London', 'Tokyo']} />,
-    );
-    const buttons = getAllByTestId('previousCityButton');
-    expect(buttons).toHaveLength(2);
-  });
+    it('renders correctly', () => {
+      setup(state);
+      const container = screen.getByTestId('city');
+      expect(container).toBeTruthy();
+    });
 
-  it('Renders no previos city header when no cities have been searched', () => {
-    const { queryByTestId } = render(<CityInput {...props} />);
-    const buttons = queryByTestId('previousCityHeader');
-    expect(buttons).toBeNull();
+    it('contains previose city header', () => {
+      setup(state);
+      const searchedCitiesHeader = screen.getByTestId('previousCities');
+      expect(searchedCitiesHeader).toBeTruthy();
+    });
+
+    it('contains 3 buttons', () => {
+      setup(state);
+      const cityButton = screen.queryAllByTestId('previousCityButton');
+      expect(cityButton).toHaveLength(3);
+    });
   });
 });

@@ -1,34 +1,24 @@
-import {
-  Container,
-  Box,
-  Card,
-  CardHeader,
-  CardMedia,
-  CardContent,
-} from '@mui/material';
+import { Box, Card, CardHeader, CardMedia, CardContent } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import dayjs from 'dayjs';
+import { useAppSelector } from '../../redux/hooks';
 
-interface props {
-  results: Array<{
-    dt: number;
-    weather: Array<{ icon: string; description: string }>;
-  }> | null;
-}
-
-const Forecast: React.FC<props> = ({ results }) => {
-  return (
-    <Box data-testid="forcast" maxWidth="md">
-      <Typography variant="h4">Seven Day Forecast</Typography>
+const Forecast = () => {
+  const { currentCity } = useAppSelector((state) => state.weather);
+  return currentCity ? (
+    <Box data-testid="forecast" maxWidth="md">
+      <Typography variant="h4">
+        Seven Day Forecast - {currentCity.name}
+      </Typography>
       <Box
         sx={{ display: 'flex', justifyContent: 'space-between', gap: '0.5rem' }}
       >
-        {results?.map((result, index) => {
+        {currentCity.data.map((result, index) => {
           const date = dayjs.unix(result.dt);
           return (
             <Card
               key={index}
-              data-testid="forcastCard"
+              data-testid="forecastCard"
               variant="outlined"
               sx={{ width: '100%' }}
             >
@@ -51,7 +41,7 @@ const Forecast: React.FC<props> = ({ results }) => {
         })}
       </Box>
     </Box>
-  );
+  ) : null;
 };
 
 export default Forecast;
