@@ -3,45 +3,47 @@ import Forecast from './Forecast';
 import forecastJson from './forecastRes.json';
 
 describe('Forcast Component: ', () => {
-  let container = null;
-  let card = null;
-  let headerText = null;
-  describe('when there is no state data', () => {
-    beforeEach(() => {
-      utilRender(<Forecast />);
-      container = screen.queryByTestId('forecast');
-      card = screen.queryAllByTestId('forcastCard');
-    });
+  const setup = (state) => utilRender(<Forecast />, state);
 
+  describe('when there is no state data', () => {
     it('does not render', () => {
+      setup();
+      const container = screen.queryByTestId('forecast');
       expect(container).toBeFalsy();
     });
 
     it('renders 0 forcast cards', () => {
+      setup();
+      const card = screen.queryAllByTestId('forecastCard');
       expect(card).toHaveLength(0);
     });
   });
 
-  describe(' contains city data in state', () => {
-    beforeEach(() => {
-      utilRender(<Forecast />, {
-        preloadedState: {
-          weather: {
-            currentCity: { name: 'Toronto', data: forecastJson.daily },
-          },
+  describe('contains city data in state', () => {
+    const state = {
+      preloadedState: {
+        weather: {
+          currentCity: { name: 'Toronto', data: forecastJson.daily },
         },
-      });
-      container = screen.queryByTestId('forecast');
-      card = screen.queryAllByTestId('forcastCard');
-      headerText = screen.getByText('Seven Day Forecast - Toronto');
-    });
+      },
+    };
 
     it('renders container correctly', () => {
+      setup(state);
+      const container = screen.queryByTestId('forecast');
       expect(container).toBeTruthy();
     });
 
     it('render correct header', () => {
+      setup(state);
+      const headerText = screen.getByText('Seven Day Forecast - Toronto');
       expect(headerText).toBeTruthy();
+    });
+
+    it('contains 8 forcast cards', () => {
+      setup(state);
+      const card = screen.queryAllByTestId('forecastCard');
+      expect(card).toHaveLength(8);
     });
   });
 });
