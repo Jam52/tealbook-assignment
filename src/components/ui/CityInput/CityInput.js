@@ -1,15 +1,16 @@
-import { Container, Box, TextField, Button } from '@mui/material';
+import { Box, TextField, Button } from '@mui/material';
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector, useAppDispatch } from '../../redux/hooks';
 import { theme } from '../theme';
-import { useDispatch } from 'react-redux';
 import { getCity } from '../../redux/features/weather';
 import PreviousCities from './PreviousCities';
 
 const CityInput = () => {
   const [formValue, changeValue] = useState('');
-  const dispatch = useDispatch();
-  const { cityStatus, searchedCities } = useSelector((state) => state.weather);
+  const dispatch = useAppDispatch();
+  const { cityStatus, searchedCities } = useAppSelector(
+    (state) => state.weather,
+  );
 
   const handleSubmit = (event) => {
     event.preventDefault();

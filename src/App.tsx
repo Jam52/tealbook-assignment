@@ -4,7 +4,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import { CssBaseline, Container } from '@mui/material';
 import { Provider } from 'react-redux';
 import { theme } from './components/ui/theme';
-import store from './components/redux/store';
+import { store } from './components/redux/store';
 import Header from './components/ui/Header';
 import CityInput from './components/ui/CityInput/CityInput';
 import Forecast from './components/ui/Forecast/Forecast';
