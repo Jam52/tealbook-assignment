@@ -7,7 +7,7 @@ const Forecast = () => {
   const { currentCity } = useAppSelector((state) => state.weather);
   return currentCity ? (
     <Box data-testid="forecast" maxWidth="md">
-      <Typography variant="h4">
+      <Typography variant="h4" gutterBottom>
         Seven Day Forecast - {currentCity.name}
       </Typography>
       <Box

@@ -14,3 +14,12 @@ export const fetchWeatherData = async (location: IGeoLocation) => {
   const data = await res.json();
   return data;
 };
+
+export const fetchReverseGeoencoding = async (location: IGeoLocation) => {
+  const { lat, lon } = location;
+  const res = await fetch(
+    `http://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=1&appid=${process.env.REACT_APP_API_KEY}`,
+  );
+  const data = await res.json();
+  return data[0];
+};

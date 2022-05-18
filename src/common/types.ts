@@ -14,4 +14,17 @@ declare global {
       weather: Array<{ icon: string; description: string }>;
     }>;
   }
+
+  interface IUserCity {
+    name: string;
+    data: {
+      dt: number;
+      temp: number;
+      humidity: number;
+      wind_speed: number;
+      pressure: number;
+      uvi: number;
+      weather: Array<{ icon: string; description: string }>;
+    };
+  }
 }
