@@ -8,7 +8,7 @@ import PreviousCities from './PreviousCities';
 const CityInput = () => {
   const [formValue, setValue] = useState('');
   const dispatch = useAppDispatch();
-  const { cityStatus, searchedCities } = useAppSelector(
+  const { fetchCityStatus, searchedCities } = useAppSelector(
     (state) => state.weather,
   );
 
@@ -44,11 +44,9 @@ const CityInput = () => {
               value={formValue}
               onChange={(event) => setValue(event.target.value)}
               id="city-input"
-              error={cityStatus === 'error'}
+              error={fetchCityStatus !== ''}
               helperText={
-                cityStatus === 'error'
-                  ? 'City not found.'
-                  : 'Enter a city name.'
+                fetchCityStatus !== '' ? fetchCityStatus : 'Enter a city name.'
               }
             ></TextField>
           </Grid>

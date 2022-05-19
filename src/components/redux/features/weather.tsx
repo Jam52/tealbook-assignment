@@ -10,19 +10,36 @@ export const getCity = createAsyncThunk<
   IGeoLocation,
   string,
   { dispatch: AppDispatch }
->('weather/getCity', async (city: string, { dispatch }) => {
-  const data = await fetchGeoLocation(city);
-  const { lat, lon, name } = data[0];
+>(
+  'weather/getCity',
+  async (city: string, { getState, dispatch, rejectWithValue }) => {
+    const state = getState() as any;
+    const weatherState = state.weather as IWeatherState;
+    if (city.toLowerCase() === weatherState?.userCityData?.name.toLowerCase()) {
+      return rejectWithValue('Current city not vaild.');
+    }
 
-  const location: IGeoLocation = {
-    lat,
-    lon,
-    name,
-  };
+    if (
+      weatherState?.searchedCities.some(
+        ({ name }) => name.toLowerCase() === city.toLowerCase(),
+      )
+    ) {
+      return rejectWithValue('City already in results.');
+    }
 
-  dispatch(getWeather(location));
-  return location;
-});
+    const data = await fetchGeoLocation(city);
+    const { lat, lon, name } = data[0];
+
+    const location: IGeoLocation = {
+      lat,
+      lon,
+      name,
+    };
+
+    dispatch(getWeather(location));
+    return location;
+  },
+);
 
 export const getWeather = createAsyncThunk<ICity, IGeoLocation>(
   'weather/weather',
@@ -82,8 +99,8 @@ const weatherSlice = createSlice({
         }
         state.fetchCityStatus = '';
       })
-      .addCase(getCity.rejected, (state, action) => {
-        state.fetchCityStatus = 'error fetching city';
+      .addCase(getCity.rejected, (state, { payload }) => {
+        state.fetchCityStatus = payload as string;
       })
       .addCase(getWeather.pending, (state, action) => {
         state.fetchWeatherStatus = 'loading';
@@ -93,19 +110,15 @@ const weatherSlice = createSlice({
           state.fetchWeatherStatus = 'no weather found';
           return;
         }
-        if (
-          !state.searchedCities.some(({ name }) => name === payload.name) &&
-          state.userCityData?.name !== payload.name
-        ) {
-          const cities = [
-            { name: payload.name, data: payload.data },
-            ...state.searchedCities,
-          ];
-          state.searchedCities = [...cities.slice(0, 7)];
-          state.fetchWeatherStatus = '';
-          state.currentCity = { name: payload.name, data: payload.data };
-          state.fetchWeatherStatus = 'ok';
-        }
+
+        const cities = [
+          { name: payload.name, data: payload.data },
+          ...state.searchedCities,
+        ];
+        state.searchedCities = [...cities.slice(0, 7)];
+        state.fetchWeatherStatus = '';
+        state.currentCity = { name: payload.name, data: payload.data };
+        state.fetchWeatherStatus = 'ok';
       })
       .addCase(getWeather.rejected, (state, action) => {
         state.fetchWeatherStatus = 'error';
