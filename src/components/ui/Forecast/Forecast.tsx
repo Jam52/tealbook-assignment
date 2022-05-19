@@ -26,12 +26,12 @@ const Forecast = () => {
       <Typography variant="h4" gutterBottom sx={{ color: 'white' }}>
         Seven Day Forecast - {city.name}
       </Typography>
-      <Grid container spacing={2} sx={{ margin: 'auto' }}>
+      <Grid container spacing={2}>
         {city.data.daily.map((day, index) => {
           const weather = day.weather[0];
           const date = dayjs.unix(day.dt);
           return (
-            <Grid item sx={{ width: '6.5rem' }}>
+            <Grid item xs>
               <Card
                 key={index}
                 data-testid="forecastCard"

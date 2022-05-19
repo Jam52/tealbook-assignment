@@ -1,7 +1,7 @@
 import { Box, Grid } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import { useEffect } from 'react';
-import { setUserCity } from '../../redux/features/weather';
+import { setUserCity, setPreviousCity } from '../../redux/features/weather';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { grey } from '@mui/material/colors';
 
