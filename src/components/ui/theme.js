@@ -5,7 +5,8 @@ const secondaryOrange = '#E8A63A';
 
 export const theme = createTheme({
   typography: {
-    fontSize: 12,
+    fontSize: 14,
+    fontFamily: "'Nunito', 'sans-serif'",
   },
   palette: {
     common: {
@@ -20,7 +21,7 @@ export const theme = createTheme({
       main: secondaryOrange,
     },
     background: {
-      default: '#D3D1D3',
+      default: primaryPurple,
     },
   },
   status: {

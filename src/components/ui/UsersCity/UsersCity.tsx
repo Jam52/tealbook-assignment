@@ -3,6 +3,7 @@ import Typography from '@mui/material/Typography';
 import { useEffect } from 'react';
 import { setUserCity } from '../../redux/features/weather';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import { grey } from '@mui/material/colors';
 
 const UserCity = () => {
   const dispatch = useAppDispatch();
@@ -22,59 +23,64 @@ const UserCity = () => {
   }, [dispatch]);
 
   if (!userCityData) {
-    return (
-      <Box data-testid="userCity" alignItems="center">
-        <img
-          data-testid="userCityImage"
-          src="logo.svg"
-          alt="logo"
-          style={{ width: '3rem' }}
-        />
-      </Box>
-    );
+    return <div />;
   }
 
   const currentUserCityData = userCityData.data.current;
 
   return (
-    <Box data-testid="userCity" alignItems="center">
-      <Grid container data-testid="userInfo">
+    <Box data-testid="userCity">
+      <Grid container data-testid="userInfo" spacing={4}>
         <Grid
           item
           sm={3}
+          xs={6}
           sx={{
             display: 'flex',
             flexDirection: 'column',
-            alignItems: 'center',
             justifyContent: 'center',
           }}
+          order={{ xs: 2, sm: 1 }}
         >
           <img
             src={`http://openweathermap.org/img/wn/${currentUserCityData?.weather[0].icon}@4x.png`}
             alt="logo"
-            style={{ width: '100%' }}
+            style={{
+              width: '100%',
+              border: '2px solid white',
+              borderRadius: '50%',
+              maxWidth: '30vmin',
+            }}
           />
         </Grid>
         <Grid
           item
           sm={6}
+          xs={12}
           sx={{
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
+            color: 'white',
           }}
+          order={{ xs: 1, sm: 2 }}
         >
-          <Typography variant="h2">Hello {userCityData.name}!</Typography>
+          <Typography variant="h2" marginBottom={3}>
+            Hello {userCityData.name}!
+          </Typography>
         </Grid>
         <Grid
           item
           sm={3}
+          xs={5}
           sx={{
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'end',
             justifyContent: 'center',
+            color: grey[300],
           }}
+          order={{ xs: 3 }}
         >
           <Typography variant="body1">
             Humidity: {currentUserCityData?.humidity}
@@ -88,7 +94,7 @@ const UserCity = () => {
           <Typography variant="body1">
             Uv Index: {currentUserCityData?.uvi}
           </Typography>
-          <Typography variant="h5">
+          <Typography variant="body1">
             {currentUserCityData?.weather[0].description}
           </Typography>
         </Grid>

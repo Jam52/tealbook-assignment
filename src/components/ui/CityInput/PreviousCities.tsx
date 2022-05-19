@@ -1,32 +1,45 @@
-import { Button, Box } from '@mui/material';
+import { Button, Grid, Typography } from '@mui/material';
 import { setPreviousCity } from '../../redux/features/weather';
-import { useAppDispatch } from '../../redux/hooks';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import { theme } from '../theme';
 
 interface props {
   cities: Array<ICity>;
 }
 const PreviousCities: React.FC<props> = ({ cities }) => {
   const dispatch = useAppDispatch();
+  const { currentCity } = useAppSelector((state) => state.weather);
   return (
     <div>
       {cities.length === 0 ? (
         ''
       ) : (
         <div data-testid="previousCities">
-          <h2>Searched Cities:</h2>
-          <Box sx={{ display: 'flex' }}>
+          <Typography component="h3" variant="h5" marginTop={3}>
+            Searched Cities:
+          </Typography>
+          <Grid container spacing={2}>
             {cities.map((city, index) => {
+              const isCurrentCity = city?.name === currentCity?.name;
               return (
-                <Button
-                  data-testid="previousCityButton"
-                  key={index}
-                  onClick={() => dispatch(setPreviousCity(city))}
-                >
-                  {city.name}
-                </Button>
+                <Grid item>
+                  <Button
+                    data-testid="previousCityButton"
+                    key={index}
+                    onClick={() => dispatch(setPreviousCity(city))}
+                    sx={{
+                      backgroundColor: isCurrentCity
+                        ? theme.palette.secondary.main
+                        : '',
+                      color: isCurrentCity ? 'white' : '',
+                    }}
+                  >
+                    {city.name}
+                  </Button>
+                </Grid>
               );
             })}
-          </Box>
+          </Grid>
         </div>
       )}
     </div>

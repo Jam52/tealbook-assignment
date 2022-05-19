@@ -6,16 +6,10 @@ describe('UsersCity Component', () => {
   const setup = (state) => utilRender(<UsersCity />, state);
 
   describe('if no users city is in state', () => {
-    it('renders correctly', () => {
+    it('does not render', () => {
       setup();
-      const container = screen.getByTestId('userCity');
-      expect(container).toBeTruthy();
-    });
-
-    it('renders placeholder img', () => {
-      setup();
-      const image = screen.getByTestId('userCityImage');
-      expect(image).toBeTruthy();
+      const container = screen.queryByTestId('userCity');
+      expect(container).toBeFalsy();
     });
   });
 

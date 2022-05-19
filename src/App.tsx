@@ -1,6 +1,5 @@
-import React from 'react';
 import './App.css';
-import { ThemeProvider } from '@mui/material/styles';
+import { ThemeProvider, responsiveFontSizes } from '@mui/material/styles';
 import { CssBaseline, Container } from '@mui/material';
 import { Provider } from 'react-redux';
 import { theme } from './components/ui/theme';
@@ -14,14 +13,19 @@ import WeatherComparison from './components/ui/WeatherComparison/WeatherComparis
 function App() {
   return (
     <Provider store={store}>
-      <ThemeProvider theme={theme}>
+      <ThemeProvider theme={responsiveFontSizes(theme)}>
         <CssBaseline />
-        <Header />
 
         <Container
           maxWidth="md"
-          sx={{ display: 'flex', flexDirection: 'column', gap: '3rem' }}
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '2rem',
+            padding: '0 1rem',
+          }}
         >
+          <Header />
           <UserCity />
           <CityInput />
           <WeatherComparison />
