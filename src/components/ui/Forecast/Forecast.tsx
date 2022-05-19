@@ -49,7 +49,8 @@ const Forecast = () => {
                   image={`http://openweathermap.org/img/wn/${weather.icon}@2x.png`}
                 />
                 <CardContent sx={{ padding: '0.5rem' }}>
-                  <Typography variant="subtitle2">
+                  <Typography variant="subtitle2">{day.temp.day} °C</Typography>
+                  <Typography variant="subtitle2" sx={{ fontSize: '0.7em' }}>
                     {weather.description}
                   </Typography>
                 </CardContent>
