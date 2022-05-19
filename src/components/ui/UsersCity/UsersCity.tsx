@@ -23,12 +23,14 @@ const UserCity = () => {
 
   if (!userCityData) {
     return (
-      <img
-        data-testid="userCityImage"
-        src="logo.svg"
-        alt="logo"
-        style={{ width: '3rem' }}
-      />
+      <Box data-testid="userCity" alignItems="center">
+        <img
+          data-testid="userCityImage"
+          src="logo.svg"
+          alt="logo"
+          style={{ width: '3rem' }}
+        />
+      </Box>
     );
   }
 
@@ -48,7 +50,7 @@ const UserCity = () => {
           }}
         >
           <img
-            src={`http://openweathermap.org/img/wn/${currentUserCityData.weather[0].icon}@4x.png`}
+            src={`http://openweathermap.org/img/wn/${currentUserCityData?.weather[0].icon}@4x.png`}
             alt="logo"
             style={{ width: '100%' }}
           />
@@ -75,19 +77,19 @@ const UserCity = () => {
           }}
         >
           <Typography variant="body1">
-            Humidity: {currentUserCityData.humidity}
+            Humidity: {currentUserCityData?.humidity}
           </Typography>
           <Typography variant="body1">
-            Pressure: {currentUserCityData.pressure}
+            Pressure: {currentUserCityData?.pressure}
           </Typography>
           <Typography variant="body1">
-            Wind Speed: {currentUserCityData.wind_speed}
+            Wind Speed: {currentUserCityData?.wind_speed}
           </Typography>
           <Typography variant="body1">
-            Uv Index: {currentUserCityData.uvi}
+            Uv Index: {currentUserCityData?.uvi}
           </Typography>
           <Typography variant="h5">
-            {currentUserCityData.weather[0].description}
+            {currentUserCityData?.weather[0].description}
           </Typography>
         </Grid>
       </Grid>

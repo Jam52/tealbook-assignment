@@ -4,16 +4,25 @@ import dayjs from 'dayjs';
 import { useAppSelector } from '../../redux/hooks';
 
 const Forecast = () => {
-  const { currentCity } = useAppSelector((state) => state.weather);
-  return currentCity ? (
+  const { currentCity, userCityData } = useAppSelector(
+    (state) => state.weather,
+  );
+
+  const city = currentCity ? currentCity : userCityData;
+
+  if (!city) {
+    return <div />;
+  }
+
+  return (
     <Box data-testid="forecast" maxWidth="md">
       <Typography variant="h4" gutterBottom>
-        Seven Day Forecast - {currentCity.name}
+        Seven Day Forecast - {city.name}
       </Typography>
       <Box
         sx={{ display: 'flex', justifyContent: 'space-between', gap: '0.5rem' }}
       >
-        {currentCity.data.daily.map((day, index) => {
+        {city.data.daily.map((day, index) => {
           const weather = day.weather[0];
           const date = dayjs.unix(day.dt);
           return (
@@ -42,7 +51,7 @@ const Forecast = () => {
         })}
       </Box>
     </Box>
-  ) : null;
+  );
 };
 
 export default Forecast;
