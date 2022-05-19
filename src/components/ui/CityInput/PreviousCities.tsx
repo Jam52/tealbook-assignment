@@ -29,7 +29,7 @@ const PreviousCities: React.FC<props> = ({ cities }) => {
                     onClick={() => dispatch(setPreviousCity(city))}
                     sx={{
                       backgroundColor: isCurrentCity
-                        ? theme.palette.secondary.main
+                        ? theme.palette.primary.main
                         : '',
                       color: isCurrentCity ? 'white' : '',
                     }}
