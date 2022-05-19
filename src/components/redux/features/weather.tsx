@@ -28,7 +28,6 @@ export const getWeather = createAsyncThunk<ICity, IGeoLocation>(
   'weather/weather',
   async (location: IGeoLocation) => {
     const data = await fetchWeatherData(location);
-    console.log(data);
     const city: ICity = { name: location.name, data: data };
     return city;
   },
@@ -94,17 +93,19 @@ const weatherSlice = createSlice({
           state.fetchWeatherStatus = 'no weather found';
           return;
         }
-        if (!state.searchedCities.some(({ name }) => name === payload.name)) {
+        if (
+          !state.searchedCities.some(({ name }) => name === payload.name) &&
+          state.userCityData?.name !== payload.name
+        ) {
           const cities = [
             { name: payload.name, data: payload.data },
             ...state.searchedCities,
           ];
           state.searchedCities = [...cities.slice(0, 7)];
           state.fetchWeatherStatus = '';
+          state.currentCity = { name: payload.name, data: payload.data };
+          state.fetchWeatherStatus = 'ok';
         }
-
-        state.currentCity = { name: payload.name, data: payload.data };
-        state.fetchWeatherStatus = 'ok';
       })
       .addCase(getWeather.rejected, (state, action) => {
         state.fetchWeatherStatus = 'error';
