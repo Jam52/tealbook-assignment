@@ -5,16 +5,23 @@ const WeatherComparison = () => {
   const { currentCity, userCityData } = useAppSelector(
     (state) => state.weather,
   );
-  if (!currentCity) {
+  if (!currentCity || !userCityData) {
     return null;
   }
+  const currentCityWeather = currentCity.data.current;
+  const userCityWeather = userCityData.data.current;
 
-  //   const tempComparison = currentCity.data[0].weather[0];
+  const tempComparison =
+    currentCityWeather?.temp > userCityWeather?.temp ? 'Hotter' : 'Colder';
+  const tempComparisonNumber = parseFloat(
+    Math.abs(currentCityWeather?.temp - userCityWeather?.temp).toFixed(2),
+  );
 
   return (
     <Box data-testid="weatherComparison">
       <Typography variant="body1">
-        In {currentCity.name} is it {}
+        In {currentCity.name} it is {tempComparison} by {tempComparisonNumber}{' '}
+        °C!
       </Typography>
     </Box>
   );

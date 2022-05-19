@@ -15,7 +15,7 @@ const Forecast = () => {
       >
         {currentCity.data.daily.map((day, index) => {
           const weather = day.weather[0];
-          const date = dayjs.unix(weather.dt);
+          const date = dayjs.unix(day.dt);
           return (
             <Card
               key={index}

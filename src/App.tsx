@@ -9,6 +9,7 @@ import Header from './components/ui/Header';
 import CityInput from './components/ui/CityInput/CityInput';
 import Forecast from './components/ui/Forecast/Forecast';
 import UserCity from './components/ui/UsersCity/UsersCity';
+import WeatherComparison from './components/ui/WeatherComparison/WeatherComparison';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         >
           <UserCity />
           <CityInput />
+          <WeatherComparison />
           <Forecast />
         </Container>
       </ThemeProvider>

@@ -25,8 +25,8 @@ describe('WeatherComparison Component', () => {
     const state = {
       preloadedState: {
         weather: {
-          userCityData: { name: 'Toronto', data: forecastToJson.daily },
-          currentCity: { name: 'Tokyo', data: tokyoForecast.daily },
+          userCityData: { name: 'Toronto', data: forecastToJson },
+          currentCity: { name: 'Tokyo', data: tokyoForecast },
         },
       },
     };
@@ -37,12 +37,12 @@ describe('WeatherComparison Component', () => {
     });
     it('renders city name of tokyo', () => {
       setup(state);
-      const text = screen.getbyText('Tokyo');
+      const text = screen.getByText(/tokyo/i);
       expect(text).toBeTruthy();
     });
     it('renders "colder" comparison', () => {
       setup(state);
-      const text = screen.getbyText('Colder');
+      const text = screen.getByText(/colder/i);
       expect(text).toBeTruthy();
     });
   });
