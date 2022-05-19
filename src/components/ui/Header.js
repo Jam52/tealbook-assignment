@@ -1,26 +1,29 @@
-import { Container, Box, Typography } from '@mui/material';
+import { Container, Typography } from '@mui/material';
 import { theme } from './theme';
 
 const Header = (props) => {
   return (
-    <header>
-      <Box className="header">
-        <Container
-          maxWidth="md"
-          sx={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            minHeight: '6rem',
-            color: theme.palette.primary.main,
-            gap: theme.spacing(4),
-          }}
+    <header className="header">
+      <Container
+        maxWidth="md"
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          padding: '0.5rem 0',
+          color: 'white',
+          gap: theme.spacing(4),
+        }}
+      >
+        <Typography
+          variant="h4"
+          component="h1"
+          sx={{ color: theme.palette.secondary.main }}
         >
-          <Typography variant="h1" sx={{ fontSize: '2.5rem' }}>
-            Tealbook Assignment - Weather Api
-          </Typography>
-        </Container>
-      </Box>
+          Tealbook Assignment
+        </Typography>
+        <img src="logo.svg" style={{ width: '4rem' }} alt="" />
+      </Container>
     </header>
   );
 };

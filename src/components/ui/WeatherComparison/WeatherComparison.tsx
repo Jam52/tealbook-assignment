@@ -11,17 +11,22 @@ const WeatherComparison = () => {
   const currentCityWeather = currentCity.data.current;
   const userCityWeather = userCityData.data.current;
 
-  const tempComparison =
-    currentCityWeather?.temp > userCityWeather?.temp ? 'Hotter' : 'Colder';
+  const isHotter =
+    currentCityWeather?.temp > userCityWeather?.temp ? true : false;
+
+  const tempComparison = isHotter ? 'HOTTER' : 'COLDER';
   const tempComparisonNumber = parseFloat(
     Math.abs(currentCityWeather?.temp - userCityWeather?.temp).toFixed(2),
   );
 
   return (
-    <Box data-testid="weatherComparison">
-      <Typography variant="body1">
-        In {currentCity.name} it is {tempComparison} by {tempComparisonNumber}{' '}
-        °C!
+    <Box data-testid="weatherComparison" sx={{ margin: '2rem 0' }}>
+      <Typography variant="h5" textAlign="center" sx={{ color: 'white' }}>
+        In {currentCity.name} it is{' '}
+        <span style={{ color: isHotter ? 'red' : 'blue' }}>
+          {tempComparison}
+        </span>{' '}
+        by {tempComparisonNumber} °C!
       </Typography>
     </Box>
   );
