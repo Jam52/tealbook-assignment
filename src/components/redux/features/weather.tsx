@@ -29,7 +29,7 @@ export const getCity = createAsyncThunk<
 
     const data = await fetchGeoLocation(city);
     const { lat, lon, name } = data[0];
-
+    console.log(data);
     const location: IGeoLocation = {
       lat,
       lon,
@@ -93,13 +93,13 @@ const weatherSlice = createSlice({
         state.fetchCityStatus = 'loading';
       })
       .addCase(getCity.fulfilled, (state, { payload }) => {
-        if (!payload) {
-          state.fetchCityStatus = 'no cities found';
-          return;
-        }
         state.fetchCityStatus = '';
       })
       .addCase(getCity.rejected, (state, { payload }) => {
+        if (!payload) {
+          state.fetchCityStatus = 'City not found';
+          return;
+        }
         state.fetchCityStatus = payload as string;
       })
       .addCase(getWeather.pending, (state, action) => {
