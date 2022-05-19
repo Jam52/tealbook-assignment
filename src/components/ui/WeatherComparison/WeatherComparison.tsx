@@ -20,7 +20,7 @@ const WeatherComparison = () => {
   );
 
   return (
-    <Box data-testid="weatherComparison">
+    <Box data-testid="weatherComparison" sx={{ margin: '2rem 0' }}>
       <Typography variant="h5" textAlign="center" sx={{ color: 'white' }}>
         In {currentCity.name} it is{' '}
         <span style={{ color: isHotter ? 'red' : 'blue' }}>
