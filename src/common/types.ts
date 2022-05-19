@@ -22,6 +22,7 @@ declare global {
       daily: Array<{
         dt: number;
         weather: Array<{ icon: string; description: string; dt: number }>;
+        temp: { day: number };
       }>;
     };
   }

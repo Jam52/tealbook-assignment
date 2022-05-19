@@ -1,7 +1,7 @@
 import { Box, Grid } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import { useEffect } from 'react';
-import { setUserCity, setPreviousCity } from '../../redux/features/weather';
+import { setUserCity } from '../../redux/features/weather';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { grey } from '@mui/material/colors';
 
@@ -73,28 +73,34 @@ const UserCity = () => {
           item
           sm={3}
           xs={5}
+          order={{ xs: 3 }}
           sx={{
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'end',
-            justifyContent: 'center',
             color: grey[300],
           }}
-          order={{ xs: 3 }}
         >
           <Typography variant="body1">
-            Humidity: {currentUserCityData?.humidity}
+            Temp: {currentUserCityData?.temp} °C
           </Typography>
           <Typography variant="body1">
-            Pressure: {currentUserCityData?.pressure}
+            Humidity: {currentUserCityData?.humidity} g.m-3
           </Typography>
           <Typography variant="body1">
-            Wind Speed: {currentUserCityData?.wind_speed}
+            Pressure: {currentUserCityData?.pressure} Pa
           </Typography>
           <Typography variant="body1">
-            Uv Index: {currentUserCityData?.uvi}
+            Wind Speed: {currentUserCityData?.wind_speed} m/s
           </Typography>
           <Typography variant="body1">
+            UV Index: {currentUserCityData?.uvi}
+          </Typography>
+          <Typography
+            variant="h6"
+            component="body"
+            sx={{ color: 'white', padding: 0 }}
+          >
             {currentUserCityData?.weather[0].description}
           </Typography>
         </Grid>
