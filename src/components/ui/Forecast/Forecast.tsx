@@ -13,8 +13,9 @@ const Forecast = () => {
       <Box
         sx={{ display: 'flex', justifyContent: 'space-between', gap: '0.5rem' }}
       >
-        {currentCity.data.map((result, index) => {
-          const date = dayjs.unix(result.dt);
+        {currentCity.data.daily.map((day, index) => {
+          const weather = day.weather[0];
+          const date = dayjs.unix(weather.dt);
           return (
             <Card
               key={index}
@@ -29,11 +30,11 @@ const Forecast = () => {
               <CardMedia
                 component="img"
                 height="80"
-                image={`http://openweathermap.org/img/wn/${result.weather[0].icon}@2x.png`}
+                image={`http://openweathermap.org/img/wn/${weather.icon}@2x.png`}
               />
               <CardContent>
                 <Typography variant="subtitle2">
-                  {result.weather[0].description}
+                  {weather.description}
                 </Typography>
               </CardContent>
             </Card>

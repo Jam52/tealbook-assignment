@@ -28,7 +28,8 @@ export const getWeather = createAsyncThunk<ICity, IGeoLocation>(
   'weather/weather',
   async (location: IGeoLocation) => {
     const data = await fetchWeatherData(location);
-    const city: ICity = { name: location.name, data: data.daily };
+    console.log(data);
+    const city: ICity = { name: location.name, data: data };
     return city;
   },
 );
@@ -38,9 +39,9 @@ export const setUserCity = createAsyncThunk(
   async (location: IGeoLocation) => {
     const weatherData = await fetchWeatherData(location);
     const cityNameData = await fetchReverseGeoencoding(location);
-    const city: IUserCity = {
+    const city: ICity = {
       name: cityNameData.name,
-      data: weatherData.current,
+      data: weatherData,
     };
     return city;
   },
@@ -51,7 +52,7 @@ interface IWeatherState {
   currentCity: ICity | null;
   searchedCities: Array<ICity>;
   fetchWeatherStatus: string;
-  userCityData: IUserCity | null;
+  userCityData: ICity | null;
 }
 
 const initialState: IWeatherState = {

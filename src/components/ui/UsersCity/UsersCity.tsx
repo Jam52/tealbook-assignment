@@ -21,72 +21,76 @@ const UserCity = () => {
     }
   }, [dispatch]);
 
+  if (!userCityData) {
+    return (
+      <img
+        data-testid="userCityImage"
+        src="logo.svg"
+        alt="logo"
+        style={{ width: '3rem' }}
+      />
+    );
+  }
+
+  const currentUserCityData = userCityData.data.current;
+
   return (
     <Box data-testid="userCity" alignItems="center">
-      {userCityData ? (
-        <Grid container data-testid="userInfo">
-          <Grid
-            item
-            sm={3}
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-          >
-            <img
-              src={`http://openweathermap.org/img/wn/${userCityData.data.weather[0].icon}@4x.png`}
-              alt="logo"
-              style={{ width: '100%' }}
-            />
-          </Grid>
-          <Grid
-            item
-            sm={6}
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-          >
-            <Typography variant="h2">Hello {userCityData.name}!</Typography>
-          </Grid>
-          <Grid
-            item
-            sm={3}
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'end',
-              justifyContent: 'center',
-            }}
-          >
-            <Typography variant="body1">
-              Humidity: {userCityData.data.humidity}
-            </Typography>
-            <Typography variant="body1">
-              Pressure: {userCityData.data.pressure}
-            </Typography>
-            <Typography variant="body1">
-              Wind Speed: {userCityData.data.wind_speed}
-            </Typography>
-            <Typography variant="body1">
-              Uv Index: {userCityData.data.uvi}
-            </Typography>
-            <Typography variant="h5">
-              {userCityData.data.weather[0].description}
-            </Typography>
-          </Grid>
+      <Grid container data-testid="userInfo">
+        <Grid
+          item
+          sm={3}
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <img
+            src={`http://openweathermap.org/img/wn/${currentUserCityData.weather[0].icon}@4x.png`}
+            alt="logo"
+            style={{ width: '100%' }}
+          />
         </Grid>
-      ) : (
-        <img
-          data-testid="image"
-          src="logo.svg"
-          alt="logo"
-          style={{ width: '3rem' }}
-        />
-      )}
+        <Grid
+          item
+          sm={6}
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <Typography variant="h2">Hello {userCityData.name}!</Typography>
+        </Grid>
+        <Grid
+          item
+          sm={3}
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'end',
+            justifyContent: 'center',
+          }}
+        >
+          <Typography variant="body1">
+            Humidity: {currentUserCityData.humidity}
+          </Typography>
+          <Typography variant="body1">
+            Pressure: {currentUserCityData.pressure}
+          </Typography>
+          <Typography variant="body1">
+            Wind Speed: {currentUserCityData.wind_speed}
+          </Typography>
+          <Typography variant="body1">
+            Uv Index: {currentUserCityData.uvi}
+          </Typography>
+          <Typography variant="h5">
+            {currentUserCityData.weather[0].description}
+          </Typography>
+        </Grid>
+      </Grid>
     </Box>
   );
 };
