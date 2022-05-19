@@ -28,7 +28,7 @@ export const getWeather = createAsyncThunk<ICity, IGeoLocation>(
   'weather/weather',
   async (location: IGeoLocation) => {
     const data = await fetchWeatherData(location);
-    const city: ICity = { name: location.name, data: data.daily };
+    const city: ICity = { name: location.name, data: data };
     return city;
   },
 );
@@ -38,9 +38,9 @@ export const setUserCity = createAsyncThunk(
   async (location: IGeoLocation) => {
     const weatherData = await fetchWeatherData(location);
     const cityNameData = await fetchReverseGeoencoding(location);
-    const city: IUserCity = {
+    const city: ICity = {
       name: cityNameData.name,
-      data: weatherData.current,
+      data: weatherData,
     };
     return city;
   },
@@ -51,7 +51,7 @@ interface IWeatherState {
   currentCity: ICity | null;
   searchedCities: Array<ICity>;
   fetchWeatherStatus: string;
-  userCityData: IUserCity | null;
+  userCityData: ICity | null;
 }
 
 const initialState: IWeatherState = {
@@ -93,17 +93,19 @@ const weatherSlice = createSlice({
           state.fetchWeatherStatus = 'no weather found';
           return;
         }
-        if (!state.searchedCities.some(({ name }) => name === payload.name)) {
+        if (
+          !state.searchedCities.some(({ name }) => name === payload.name) &&
+          state.userCityData?.name !== payload.name
+        ) {
           const cities = [
             { name: payload.name, data: payload.data },
             ...state.searchedCities,
           ];
           state.searchedCities = [...cities.slice(0, 7)];
           state.fetchWeatherStatus = '';
+          state.currentCity = { name: payload.name, data: payload.data };
+          state.fetchWeatherStatus = 'ok';
         }
-
-        state.currentCity = { name: payload.name, data: payload.data };
-        state.fetchWeatherStatus = 'ok';
       })
       .addCase(getWeather.rejected, (state, action) => {
         state.fetchWeatherStatus = 'error';

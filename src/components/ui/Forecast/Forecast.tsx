@@ -4,17 +4,27 @@ import dayjs from 'dayjs';
 import { useAppSelector } from '../../redux/hooks';
 
 const Forecast = () => {
-  const { currentCity } = useAppSelector((state) => state.weather);
-  return currentCity ? (
+  const { currentCity, userCityData } = useAppSelector(
+    (state) => state.weather,
+  );
+
+  const city = currentCity ? currentCity : userCityData;
+
+  if (!city) {
+    return <div />;
+  }
+
+  return (
     <Box data-testid="forecast" maxWidth="md">
       <Typography variant="h4" gutterBottom>
-        Seven Day Forecast - {currentCity.name}
+        Seven Day Forecast - {city.name}
       </Typography>
       <Box
         sx={{ display: 'flex', justifyContent: 'space-between', gap: '0.5rem' }}
       >
-        {currentCity.data.map((result, index) => {
-          const date = dayjs.unix(result.dt);
+        {city.data.daily.map((day, index) => {
+          const weather = day.weather[0];
+          const date = dayjs.unix(day.dt);
           return (
             <Card
               key={index}
@@ -29,11 +39,11 @@ const Forecast = () => {
               <CardMedia
                 component="img"
                 height="80"
-                image={`http://openweathermap.org/img/wn/${result.weather[0].icon}@2x.png`}
+                image={`http://openweathermap.org/img/wn/${weather.icon}@2x.png`}
               />
               <CardContent>
                 <Typography variant="subtitle2">
-                  {result.weather[0].description}
+                  {weather.description}
                 </Typography>
               </CardContent>
             </Card>
@@ -41,7 +51,7 @@ const Forecast = () => {
         })}
       </Box>
     </Box>
-  ) : null;
+  );
 };
 
 export default Forecast;

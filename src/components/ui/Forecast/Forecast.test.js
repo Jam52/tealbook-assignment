@@ -23,7 +23,7 @@ describe('Forcast Component: ', () => {
     const state = {
       preloadedState: {
         weather: {
-          currentCity: { name: 'Toronto', data: forecastJson.daily },
+          currentCity: { name: 'Toronto', data: forecastJson },
         },
       },
     };

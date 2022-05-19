@@ -14,7 +14,7 @@ describe('UsersCity Component', () => {
 
     it('renders placeholder img', () => {
       setup();
-      const image = screen.getByTestId('image');
+      const image = screen.getByTestId('userCityImage');
       expect(image).toBeTruthy();
     });
   });
