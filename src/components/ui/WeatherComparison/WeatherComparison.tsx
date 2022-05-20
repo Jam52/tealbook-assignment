@@ -5,7 +5,7 @@ const WeatherComparison = () => {
   const { currentCity, userCityData } = useAppSelector(
     (state) => state.weather,
   );
-  if (!currentCity || !userCityData) {
+  if (!currentCity || !userCityData || currentCity.name === userCityData.name) {
     return null;
   }
   const currentCityWeather = currentCity.data.current;
@@ -23,7 +23,7 @@ const WeatherComparison = () => {
     <Box data-testid="weatherComparison" sx={{ margin: '2rem 0' }}>
       <Typography variant="h5" textAlign="center" sx={{ color: 'white' }}>
         In {currentCity.name} it is{' '}
-        <span style={{ color: isHotter ? 'red' : 'blue' }}>
+        <span style={{ color: isHotter ? '#CD5C5C' : '#5dd1e8' }}>
           {tempComparison}
         </span>{' '}
         by {tempComparisonNumber} °C!
