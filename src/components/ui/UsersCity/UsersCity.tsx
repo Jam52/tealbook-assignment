@@ -10,16 +10,23 @@ const UserCity = () => {
   const { userCityData } = useAppSelector((state) => state.weather);
 
   useEffect(() => {
-    if ('geolocation' in navigator) {
-      navigator.geolocation.getCurrentPosition((pos) => {
-        const location: IGeoLocation = {
-          lat: pos.coords.latitude,
-          lon: pos.coords.longitude,
-          name: 'unknown',
-        };
-        dispatch(setUserCity(location));
-      });
-    }
+    const fetchUserCityData = () => {
+      if ('geolocation' in navigator) {
+        navigator.geolocation.getCurrentPosition((pos) => {
+          const location: IGeoLocation = {
+            lat: pos.coords.latitude,
+            lon: pos.coords.longitude,
+            name: 'unknown',
+          };
+          dispatch(setUserCity(location));
+        });
+      }
+    };
+
+    fetchUserCityData();
+    setInterval(() => {
+      fetchUserCityData();
+    }, 5 * 60000);
   }, [dispatch]);
 
   if (!userCityData) {
