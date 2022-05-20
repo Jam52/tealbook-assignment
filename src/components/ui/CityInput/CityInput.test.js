@@ -23,9 +23,10 @@ describe('CityInput Component', () => {
     const state = {
       preloadedState: {
         weather: {
+          userCityData: { name: 'Toronto', data: forecastJson.daily },
           cityStatus: '',
           searchedCities: [
-            { name: 'Toronto', data: forecastJson.daily },
+            { name: 'Nottingham', data: forecastJson.daily },
             { name: 'New York', data: forecastJson.daily },
             { name: 'Nottingham', data: forecastJson.daily },
           ],
@@ -45,10 +46,10 @@ describe('CityInput Component', () => {
       expect(searchedCitiesHeader).toBeTruthy();
     });
 
-    it('contains 3 buttons', () => {
+    it('contains 4 buttons', () => {
       setup(state);
       const cityButton = screen.queryAllByTestId('previousCityButton');
-      expect(cityButton).toHaveLength(3);
+      expect(cityButton).toHaveLength(4);
     });
   });
 });
