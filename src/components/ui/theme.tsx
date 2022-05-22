@@ -1,5 +1,16 @@
 import { createTheme } from '@mui/material/styles';
 
+import '@mui/material/styles/createPalette';
+declare module '@mui/material/styles/createPalette' {
+  interface CommonColors {
+    purple: string;
+    orange: string;
+    white: string;
+    red: string;
+    blue: string;
+  }
+}
+
 const primaryPurple = '#3A254C';
 const secondaryOrange = '#E8A63A';
 
@@ -13,6 +24,8 @@ export const theme = createTheme({
       purple: primaryPurple,
       orange: secondaryOrange,
       white: '#fff',
+      red: '#CD5C5C',
+      blue: '#5dd1e8',
     },
     primary: {
       main: primaryPurple,
@@ -23,9 +36,6 @@ export const theme = createTheme({
     background: {
       default: primaryPurple,
     },
-  },
-  status: {
-    danger: '#E53C3C',
   },
   spacing: [0, 4, 8, 16, 32, 64],
 });

@@ -1,5 +1,6 @@
 import { Box, Typography } from '@mui/material';
 import { useAppSelector } from '../../redux/hooks';
+import { theme } from '../theme';
 
 const WeatherComparison = () => {
   const { currentCity, userCityData } = useAppSelector(
@@ -14,7 +15,7 @@ const WeatherComparison = () => {
   const isHotter =
     currentCityWeather?.temp > userCityWeather?.temp ? true : false;
 
-  const tempComparison = isHotter ? 'HOTTER' : 'COLDER';
+  const tempComparisonText = isHotter ? 'HOTTER' : 'COLDER';
   const tempComparisonNumber = parseFloat(
     Math.abs(currentCityWeather?.temp - userCityWeather?.temp).toFixed(2),
   );
@@ -23,8 +24,14 @@ const WeatherComparison = () => {
     <Box data-testid="weatherComparison" sx={{ margin: '2rem 0' }}>
       <Typography variant="h5" textAlign="center" sx={{ color: 'white' }}>
         In {currentCity.name} it is{' '}
-        <span style={{ color: isHotter ? '#CD5C5C' : '#5dd1e8' }}>
-          {tempComparison}
+        <span
+          style={{
+            color: isHotter
+              ? theme.palette.common.red
+              : theme.palette.common.blue,
+          }}
+        >
+          {tempComparisonText}
         </span>{' '}
         by {tempComparisonNumber} °C!
       </Typography>

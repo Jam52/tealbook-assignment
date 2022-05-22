@@ -15,7 +15,6 @@ function App() {
     <Provider store={store}>
       <ThemeProvider theme={responsiveFontSizes(theme)}>
         <CssBaseline />
-
         <Container
           maxWidth="md"
           sx={{
