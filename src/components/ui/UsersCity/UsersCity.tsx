@@ -41,7 +41,7 @@ const UserCity = () => {
         <Grid
           item
           sm={3}
-          xs={6}
+          xs={5}
           sx={{
             display: 'flex',
             flexDirection: 'column',
@@ -79,7 +79,7 @@ const UserCity = () => {
         <Grid
           item
           sm={3}
-          xs={5}
+          xs={7}
           order={{ xs: 3 }}
           sx={{
             display: 'flex',

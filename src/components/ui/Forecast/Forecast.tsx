@@ -31,9 +31,8 @@ const Forecast = () => {
           const weather = day.weather[0];
           const date = dayjs.unix(day.dt);
           return (
-            <Grid item xs>
+            <Grid item xs={3} key={index} sm>
               <Card
-                key={index}
                 data-testid="forecastCard"
                 variant="outlined"
                 sx={{ width: '100%', height: '100%' }}
