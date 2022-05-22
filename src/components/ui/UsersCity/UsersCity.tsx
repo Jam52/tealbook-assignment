@@ -85,6 +85,7 @@ const UserCity = () => {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'end',
+            justifyContent: 'center',
             color: grey[300],
           }}
         >
